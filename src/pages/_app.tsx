@@ -1,6 +1,11 @@
-import '@/styles/globals.css'
-import type { AppProps } from 'next/app'
+import { ImageContextProvider } from "@/context/ImageContextProvider";
+import "@/styles/globals.css";
+import type { AppProps } from "next/app";
 
 export default function App({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+  return (
+    <ImageContextProvider>
+      <Component {...pageProps} />
+    </ImageContextProvider>
+  );
 }
