@@ -4,14 +4,42 @@ import { createContext, ReactNode } from "react";
 
 export const ImageContext = createContext<ImageContextT>({
   state: null,
+  reset: null,
+  editAgain: null,
   setImageState: null,
   setOriginalUrl: null,
+  cropFaces: null,
+  blurFaces: null,
+  cropImage: null,
+  removeBackground: null,
 });
 
 export const ImageContextProvider = ({ children }: { children: ReactNode }) => {
-  const { state, setImageState, setOriginalUrl } = useImageReducer();
+  const {
+    state,
+    reset,
+    editAgain,
+    setImageState,
+    setOriginalUrl,
+    cropFaces,
+    blurFaces,
+    cropImage,
+    removeBackground,
+  } = useImageReducer();
   return (
-    <ImageContext.Provider value={{ state, setImageState, setOriginalUrl }}>
+    <ImageContext.Provider
+      value={{
+        state,
+        reset,
+        editAgain,
+        setImageState,
+        setOriginalUrl,
+        cropFaces,
+        blurFaces,
+        cropImage,
+        removeBackground,
+      }}
+    >
       {children}
     </ImageContext.Provider>
   );
