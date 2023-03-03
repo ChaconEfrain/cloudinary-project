@@ -41,15 +41,9 @@ const UploadImage = () => {
       action="https://api.cloudinary.com/v1_1/efrainchacon/image/upload"
       className="shadow-2xl border-dashed border-2 border-teal-800 rounded-lg aspect-video w-full flex items-center justify-center flex-col gap-2"
     >
-      {/* <label className="bg-teal-800 py-2 px-8 rounded-full cursor-pointer text-white">
-        Upload image
-      </label>
-      <div className="flex gap-2 items-center">
-        <div className="w-14 h-[2px] bg-teal-800" />
-        <span>Or</span>
-        <div className="w-14 h-[2px] bg-teal-800" />
-      </div> */}
-      <p>Drop a file</p>
+      <p className="text-teal-800 font-semibold text-2xl">
+        Drop your image here
+      </p>
     </form>
   );
 };
