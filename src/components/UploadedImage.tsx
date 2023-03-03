@@ -13,6 +13,7 @@ const UploadedImage = ({
         ref={originalImage}
         src={state?.originalImageUrl}
         alt="Image uploaded by the user"
+        className={`aspect-[${state?.originalWidth}/${state?.originalHeight}]`}
       />
     </figure>
   );
