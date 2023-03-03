@@ -27,9 +27,9 @@ const ImageCropper = () => {
     const { left, top, width, height } = cropData!;
     const div = divRef.current as unknown as HTMLDivElement;
     const imageWidth = div.getBoundingClientRect().width;
-    const scale = state?.originalWidth! / imageWidth;
+    const scaleFactor = state?.originalWidth! / imageWidth;
 
-    cropImage!({ x: left, y: top, width, height, scale });
+    cropImage!({ x: left, y: top, width, height, scaleFactor });
   };
 
   return (
