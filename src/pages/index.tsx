@@ -19,6 +19,14 @@ export default function Home() {
       setAdjustingBrightness(true);
     } else if (state?.brightnessFinished) setAdjustingBrightness(false);
   }, [state?.editedImageUrl, state?.brightnessFinished]);
+
+  const showEditOptions =
+    state?.imageUploaded === ImageState.DONE &&
+    (!state?.editedImageUrl || state.editedImageUrl.includes("brightness")) &&
+    !state.brightnessFinished;
+  const showUploadImage = !state?.originalImageUrl;
+  const showImageComparisson = state?.editedImageUrl && !adjustingBrightness;
+
   return (
     <>
       <Head>
@@ -39,12 +47,9 @@ export default function Home() {
             </span>
           </h1>
         </header>
-        {state?.imageUploaded === ImageState.DONE &&
-          (!state?.editedImageUrl ||
-            state.editedImageUrl.includes("brightness")) &&
-          !state.brightnessFinished && <EditOptions />}
-        {!state?.originalImageUrl && <UploadImage />}
-        {state?.editedImageUrl && !adjustingBrightness && <ImageComparison />}
+        {showEditOptions && <EditOptions />}
+        {showUploadImage && <UploadImage />}
+        {showImageComparisson && <ImageComparison />}
       </main>
     </>
   );
