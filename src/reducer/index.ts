@@ -65,7 +65,6 @@ export const reducer = (state: State, action: Action) => {
         imagePublicId: publicId,
         originalWidth: originalWidth,
         originalHeight: originalHeight,
-        brightnessFinished: true,
       };
 
     case reducerActions.CROP_FACES:
