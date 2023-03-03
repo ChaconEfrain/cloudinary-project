@@ -52,7 +52,7 @@ const ImageComparison = () => {
         <a
           href={url}
           download="modified-image.jpg"
-          className="bg-teal-800 text-white rounded-full w-full text-center py-2 hover:bg-teal-900 transition-all duration-300"
+          className="bg-teal-800 text-white rounded-full w-full text-center py-2 hover:bg-teal-900 transition-all duration-300 mt-auto"
         >
           Download modified image
         </a>
