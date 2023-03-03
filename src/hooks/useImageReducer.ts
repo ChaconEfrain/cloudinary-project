@@ -49,6 +49,10 @@ const useImageReducer = () => {
     dispatch({ type: reducerActions.BRIGHTNESS_FINISHED });
   };
 
+  const pixelateArea = (cropData: CropData) => {
+    dispatch({ type: reducerActions.PIXELATE_AREA, payload: cropData });
+  };
+
   return {
     state,
     reset,
@@ -61,6 +65,7 @@ const useImageReducer = () => {
     removeBackground,
     adjustBrightness,
     brightnessFinished,
+    pixelateArea,
   };
 };
 

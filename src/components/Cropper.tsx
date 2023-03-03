@@ -4,8 +4,14 @@ import Cropper from "cropperjs";
 import "cropperjs/dist/cropper.min.css";
 import ImageUploaded from "./UploadedImage";
 
-const ImageCropper = () => {
-  const { state, cropImage } = useContext(ImageContext);
+const ImageCropper = ({
+  toCrop,
+  toPixelate,
+}: {
+  toCrop?: boolean;
+  toPixelate?: boolean;
+}) => {
+  const { state, cropImage, pixelateArea } = useContext(ImageContext);
   const [cropper, setCropper] = useState<Cropper>();
   const cropperInitialized = useRef(false);
   const originalImage = useRef(null);
@@ -23,13 +29,16 @@ const ImageCropper = () => {
   }, [cropper, state?.editedImageUrl]);
 
   const handleCropping = () => {
-    const cropData = cropper?.getCropBoxData();
-    const { left, top, width, height } = cropData!;
+    const cropInfo = cropper?.getCropBoxData();
+    const { left, top, width, height } = cropInfo!;
     const div = divRef.current as unknown as HTMLDivElement;
     const imageWidth = div.getBoundingClientRect().width;
     const scaleFactor = state?.originalWidth! / imageWidth;
+    const cropData = { x: left, y: top, width, height, scaleFactor };
 
-    cropImage!({ x: left, y: top, width, height, scaleFactor });
+    if (toCrop) {
+      cropImage!(cropData);
+    } else if (toPixelate) pixelateArea!(cropData);
   };
 
   return (
@@ -44,7 +53,7 @@ const ImageCropper = () => {
         onClick={handleCropping}
         className="col-span-full bg-teal-800 text-white rounded-full w-full text-center py-2 hover:bg-teal-900 transition-all duration-300 mt-4"
       >
-        Crop image
+        Accept
       </button>
     </div>
   );

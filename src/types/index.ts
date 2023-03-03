@@ -11,6 +11,7 @@ export enum EditOptionsList {
   BLUR_FACES = "Blur faces",
   // TURN_OLD = "Turn old",
   ADJUST_BRIGHTNESS = "Adjust brightness",
+  PIXELATE_AREA = "Pixelate area",
 }
 
 export type State = {
@@ -48,6 +49,7 @@ export type ImageContextT = {
   removeBackground: (() => void) | null;
   adjustBrightness: ((percentage: number) => void) | null;
   brightnessFinished: (() => void) | null;
+  pixelateArea: ((cropData: CropData) => void) | null;
   // turnOld: (() => void) | null;
 };
 

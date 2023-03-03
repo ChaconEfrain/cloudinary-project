@@ -14,6 +14,7 @@ export const ImageContext = createContext<ImageContextT>({
   removeBackground: null,
   adjustBrightness: null,
   brightnessFinished: null,
+  pixelateArea: null,
 });
 
 export const ImageContextProvider = ({ children }: { children: ReactNode }) => {
@@ -29,6 +30,7 @@ export const ImageContextProvider = ({ children }: { children: ReactNode }) => {
     removeBackground,
     adjustBrightness,
     brightnessFinished,
+    pixelateArea,
   } = useImageReducer();
   return (
     <ImageContext.Provider
@@ -44,6 +46,7 @@ export const ImageContextProvider = ({ children }: { children: ReactNode }) => {
         removeBackground,
         adjustBrightness,
         brightnessFinished,
+        pixelateArea,
       }}
     >
       {children}

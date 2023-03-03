@@ -5,8 +5,8 @@ import {
   backgroundRemoval,
   pixelate,
 } from "@cloudinary/url-gen/actions/effect";
-import { crop, thumbnail } from "@cloudinary/url-gen/actions/resize";
-import { faces } from "@cloudinary/url-gen/qualifiers/region";
+import { crop, fill, thumbnail } from "@cloudinary/url-gen/actions/resize";
+import { custom, faces } from "@cloudinary/url-gen/qualifiers/region";
 
 export const reducerActions = {
   RESET: "RESET",
@@ -19,6 +19,7 @@ export const reducerActions = {
   REMOVE_BACKGROUND: "REMOVE_BACKGROUND",
   ADJUST_BRIGHTNESS: "ADJUST_BRIGHTNESS",
   BRIGHTNESS_FINISHED: "BRIGHTNESS_FINISHED",
+  PIXELATE_AREA: "PIXELATE_AREA",
   // TURN_OLD: "TURN_OLD",
 };
 
@@ -51,7 +52,7 @@ export const reducer = (state: State, action: Action) => {
         imageUploaded: action.payload,
       };
 
-    case reducerActions.SET_ORIGINAL_URL:
+    case reducerActions.SET_ORIGINAL_URL: {
       const {
         publicId,
         url,
@@ -66,8 +67,9 @@ export const reducer = (state: State, action: Action) => {
         originalWidth: originalWidth,
         originalHeight: originalHeight,
       };
+    }
 
-    case reducerActions.CROP_FACES:
+    case reducerActions.CROP_FACES: {
       const facesImage = cloudinary
         .image(state.imagePublicId)
         .resize(thumbnail().width(500).height(500).gravity("faces"));
@@ -77,8 +79,9 @@ export const reducer = (state: State, action: Action) => {
         editedImageUrl: facesImage.toURL(),
         brightnessFinished: true,
       };
+    }
 
-    case reducerActions.BLUR_FACES:
+    case reducerActions.BLUR_FACES: {
       const blurFaces = cloudinary
         .image(state.imagePublicId)
         .effect(pixelate().squareSize(30).region(faces()));
@@ -87,8 +90,9 @@ export const reducer = (state: State, action: Action) => {
         editedImageUrl: blurFaces.toURL(),
         brightnessFinished: true,
       };
+    }
 
-    case reducerActions.CROP:
+    case reducerActions.CROP: {
       const { width, height, x, y, scaleFactor } = action.payload;
       const croppedImage = cloudinary.image(state.imagePublicId).resize(
         crop()
@@ -102,8 +106,9 @@ export const reducer = (state: State, action: Action) => {
         editedImageUrl: croppedImage.toURL(),
         brightnessFinished: true,
       };
+    }
 
-    case reducerActions.REMOVE_BACKGROUND:
+    case reducerActions.REMOVE_BACKGROUND: {
       const imageWithoutBackground = cloudinary
         .image(state.imagePublicId)
         .effect(backgroundRemoval());
@@ -112,8 +117,9 @@ export const reducer = (state: State, action: Action) => {
         editedImageUrl: imageWithoutBackground.toURL(),
         brightnessFinished: true,
       };
+    }
 
-    case reducerActions.ADJUST_BRIGHTNESS:
+    case reducerActions.ADJUST_BRIGHTNESS: {
       const percentage = action.payload;
       const image = cloudinary
         .image(state.imagePublicId)
@@ -122,12 +128,33 @@ export const reducer = (state: State, action: Action) => {
         ...state,
         editedImageUrl: image.toURL(),
       };
+    }
 
     case reducerActions.BRIGHTNESS_FINISHED:
       return {
         ...state,
         brightnessFinished: true,
       };
+
+    case reducerActions.PIXELATE_AREA: {
+      const { width, height, x, y, scaleFactor } = action.payload;
+      const pixelatedImage = cloudinary
+        .image(state.imagePublicId)
+        .effect(
+          pixelate().region(
+            custom()
+              .width(Math.round(width * scaleFactor))
+              .height(Math.round(height * scaleFactor))
+              .x(Math.round(x * scaleFactor))
+              .y(Math.round(y * scaleFactor))
+          )
+        )
+        .resize(fill());
+      return {
+        ...state,
+        editedImageUrl: pixelatedImage.toURL(),
+      };
+    }
 
     default:
       return state;

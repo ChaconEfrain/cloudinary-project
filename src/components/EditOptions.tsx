@@ -8,7 +8,10 @@ import UploadedImage from "./UploadedImage";
 const EditOptions = () => {
   const { state, cropFaces, blurFaces, removeBackground, adjustBrightness } =
     useContext(ImageContext);
-  const [showCropper, setShowCropper] = useState<boolean>(false);
+  const [showCropper, setShowCropper] = useState({
+    toCrop: false,
+    toPixelate: false,
+  });
   const [showAdjustBrightness, setShowAdjustBrightness] =
     useState<boolean>(false);
   const editOptions = Object.values(EditOptionsList);
@@ -23,7 +26,10 @@ const EditOptions = () => {
         break;
 
       case EditOptionsList.CROP:
-        setShowCropper(true);
+        setShowCropper({
+          toCrop: true,
+          toPixelate: false,
+        });
         break;
 
       case EditOptionsList.REMOVE_BACKGROUND:
@@ -33,6 +39,13 @@ const EditOptions = () => {
       case EditOptionsList.ADJUST_BRIGHTNESS:
         setShowAdjustBrightness(true);
         adjustBrightness!(1);
+        break;
+
+      case EditOptionsList.PIXELATE_AREA:
+        setShowCropper({
+          toCrop: false,
+          toPixelate: true,
+        });
         break;
 
       default:
@@ -47,8 +60,11 @@ const EditOptions = () => {
   return (
     <article className="grid grid-cols-[45fr_55fr] justify-center gap-8 mb-8">
       {showAdjustBrightness && <AdjustBrightness />}
-      {!showCropper && !showAdjustBrightness && <UploadedImage />}
-      {showCropper && <ImageCropper />}
+      {!showCropper.toCrop &&
+        !showCropper.toPixelate &&
+        !showAdjustBrightness && <UploadedImage />}
+      {showCropper.toCrop && <ImageCropper toCrop={true} />}
+      {showCropper.toPixelate && <ImageCropper toPixelate={true} />}
       <div className="flex flex-col gap-4">
         <p className="text-teal-800 font-semibold text-xl text-center">
           What would you like to do?
