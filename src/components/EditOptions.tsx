@@ -1,13 +1,16 @@
 import { ImageContext } from "@/context/ImageContextProvider";
 import { EditOptionsList } from "@/types";
 import { BaseSyntheticEvent, useContext, useEffect, useState } from "react";
+import AdjustBrightness from "./AdjustBrightness";
 import ImageCropper from "./Cropper";
 import UploadedImage from "./UploadedImage";
 
 const EditOptions = () => {
-  const { state, cropFaces, blurFaces, removeBackground } =
+  const { state, cropFaces, blurFaces, removeBackground, adjustBrightness } =
     useContext(ImageContext);
   const [showCropper, setShowCropper] = useState<boolean>(false);
+  const [showAdjustBrightness, setShowAdjustBrightness] =
+    useState<boolean>(false);
   const editOptions = Object.values(EditOptionsList);
   const handlePickOption = (e: BaseSyntheticEvent) => {
     switch (e.target.innerHTML) {
@@ -27,6 +30,11 @@ const EditOptions = () => {
         removeBackground!();
         break;
 
+      case EditOptionsList.ADJUST_BRIGHTNESS:
+        setShowAdjustBrightness(true);
+        adjustBrightness!(1);
+        break;
+
       default:
         break;
     }
@@ -38,10 +46,11 @@ const EditOptions = () => {
 
   return (
     <article className="grid grid-cols-[45fr_55fr] justify-center gap-8 mb-8">
-      {!showCropper && <UploadedImage />}
+      {showAdjustBrightness && <AdjustBrightness />}
+      {!showCropper && !showAdjustBrightness && <UploadedImage />}
       {showCropper && <ImageCropper />}
       <div className="flex flex-col gap-4">
-        <p className="text-teal-800 font-semibold text-xl">
+        <p className="text-teal-800 font-semibold text-xl text-center">
           What would you like to do?
         </p>
         <ul

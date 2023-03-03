@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import UploadImage from "@/components/UploadImage";
 import CropperScript from "@/cropper_script/Script";
 import { ImageState } from "@/types";
@@ -9,6 +9,16 @@ import ImageComparison from "@/components/ImageComparison";
 
 export default function Home() {
   const { state, reset } = useContext(ImageContext);
+  const [adjustingBrightness, setAdjustingBrightness] =
+    useState<boolean>(false);
+  useEffect(() => {
+    if (
+      state?.editedImageUrl.includes("brightness") &&
+      !state.brightnessFinished
+    ) {
+      setAdjustingBrightness(true);
+    } else if (state?.brightnessFinished) setAdjustingBrightness(false);
+  }, [state?.editedImageUrl, state?.brightnessFinished]);
   return (
     <>
       <Head>
@@ -29,11 +39,12 @@ export default function Home() {
             </span>
           </h1>
         </header>
-        {state?.imageUploaded === ImageState.DONE && !state?.editedImageUrl && (
-          <EditOptions />
-        )}
+        {state?.imageUploaded === ImageState.DONE &&
+          (!state?.editedImageUrl ||
+            state.editedImageUrl.includes("brightness")) &&
+          !state.brightnessFinished && <EditOptions />}
         {!state?.originalImageUrl && <UploadImage />}
-        {state?.editedImageUrl && <ImageComparison />}
+        {state?.editedImageUrl && !adjustingBrightness && <ImageComparison />}
       </main>
     </>
   );

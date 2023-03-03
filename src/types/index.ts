@@ -9,6 +9,8 @@ export enum EditOptionsList {
   CROP = "Crop",
   CROP_FACES = "Crop faces",
   BLUR_FACES = "Blur faces",
+  // TURN_OLD = "Turn old",
+  ADJUST_BRIGHTNESS = "Adjust brightness",
 }
 
 export type State = {
@@ -16,8 +18,10 @@ export type State = {
   wantedEffect: string;
   originalImageUrl: string;
   originalWidth: number;
+  originalHeight: number;
   imagePublicId: string;
   editedImageUrl: string;
+  brightnessFinished: boolean;
 };
 
 export type Action = {
@@ -31,12 +35,20 @@ export type ImageContextT = {
   editAgain: (() => void) | null;
   setImageState: ((imageState: ImageState) => void) | null;
   setOriginalUrl:
-    | ((imageInfo: { url: string; publicId: string; width: number }) => void)
+    | ((imageInfo: {
+        url: string;
+        publicId: string;
+        width: number;
+        height: number;
+      }) => void)
     | null;
   cropFaces: (() => void) | null;
   blurFaces: (() => void) | null;
   cropImage: ((cropData: CropData) => void) | null;
   removeBackground: (() => void) | null;
+  adjustBrightness: ((percentage: number) => void) | null;
+  brightnessFinished: (() => void) | null;
+  // turnOld: (() => void) | null;
 };
 
 export type CropData = {
@@ -44,5 +56,5 @@ export type CropData = {
   y: number;
   width: number;
   height: number;
-  scale: number;
+  scaleFactor: number;
 };

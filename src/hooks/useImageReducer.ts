@@ -41,6 +41,14 @@ const useImageReducer = () => {
     dispatch({ type: reducerActions.REMOVE_BACKGROUND });
   };
 
+  const adjustBrightness = (percentage: number) => {
+    dispatch({ type: reducerActions.ADJUST_BRIGHTNESS, payload: percentage });
+  };
+
+  const brightnessFinished = () => {
+    dispatch({ type: reducerActions.BRIGHTNESS_FINISHED });
+  };
+
   return {
     state,
     reset,
@@ -51,6 +59,8 @@ const useImageReducer = () => {
     blurFaces,
     cropImage,
     removeBackground,
+    adjustBrightness,
+    brightnessFinished,
   };
 };
 

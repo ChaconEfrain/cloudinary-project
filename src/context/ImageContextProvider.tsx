@@ -12,6 +12,8 @@ export const ImageContext = createContext<ImageContextT>({
   blurFaces: null,
   cropImage: null,
   removeBackground: null,
+  adjustBrightness: null,
+  brightnessFinished: null,
 });
 
 export const ImageContextProvider = ({ children }: { children: ReactNode }) => {
@@ -25,6 +27,8 @@ export const ImageContextProvider = ({ children }: { children: ReactNode }) => {
     blurFaces,
     cropImage,
     removeBackground,
+    adjustBrightness,
+    brightnessFinished,
   } = useImageReducer();
   return (
     <ImageContext.Provider
@@ -38,6 +42,8 @@ export const ImageContextProvider = ({ children }: { children: ReactNode }) => {
         blurFaces,
         cropImage,
         removeBackground,
+        adjustBrightness,
+        brightnessFinished,
       }}
     >
       {children}

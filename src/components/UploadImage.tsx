@@ -22,15 +22,15 @@ const UploadImage = () => {
     dropzone?.on("sending", (file, xhr, formData) => {
       // aqui podemos añadir la apiKey, configuracion
       setImageState!(ImageState.LOADING);
-      console.log(formData);
       formData.append("upload_preset", "ml_default");
       formData.append("timestamp", (Date.now() / 1000).toString());
       formData.append("api_key", "779464696215434");
     });
 
     dropzone?.on("success", (file, resp) => {
-      const { public_id: publicId, secure_url: url, width } = resp;
-      setOriginalUrl!({ publicId, url, width });
+      const { public_id: publicId, secure_url: url, width, height } = resp;
+      console.log(resp);
+      setOriginalUrl!({ publicId, url, width, height });
     });
   }, []);
 
