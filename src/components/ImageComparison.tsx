@@ -30,7 +30,7 @@ const ImageComparison = () => {
         <UploadedImage />
         <button
           onClick={editAgain!}
-          className="bg-teal-800 text-white rounded-full w-full text-center py-2 hover:bg-teal-900 transition-all duration-300"
+          className="bg-teal-800 text-white rounded-full w-full text-center py-2 hover:bg-teal-900 transition-all duration-300 mt-auto"
         >
           Edit again
         </button>
