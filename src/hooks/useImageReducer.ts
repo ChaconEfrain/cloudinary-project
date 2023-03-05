@@ -53,6 +53,10 @@ const useImageReducer = () => {
     dispatch({ type: reducerActions.PIXELATE_AREA, payload: cropData });
   };
 
+  const roundImage = () => {
+    dispatch({ type: reducerActions.ROUND_IMAGE });
+  };
+
   return {
     state,
     reset,
@@ -66,6 +70,7 @@ const useImageReducer = () => {
     adjustBrightness,
     brightnessFinished,
     pixelateArea,
+    roundImage,
   };
 };
 

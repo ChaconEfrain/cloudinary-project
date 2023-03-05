@@ -6,6 +6,7 @@ import {
   pixelate,
 } from "@cloudinary/url-gen/actions/effect";
 import { crop, fill, thumbnail } from "@cloudinary/url-gen/actions/resize";
+import { max } from "@cloudinary/url-gen/actions/roundCorners";
 import { custom, faces } from "@cloudinary/url-gen/qualifiers/region";
 
 export const reducerActions = {
@@ -20,6 +21,7 @@ export const reducerActions = {
   ADJUST_BRIGHTNESS: "ADJUST_BRIGHTNESS",
   BRIGHTNESS_FINISHED: "BRIGHTNESS_FINISHED",
   PIXELATE_AREA: "PIXELATE_AREA",
+  ROUND_IMAGE: "ROUND_IMAGE",
   // TURN_OLD: "TURN_OLD",
 };
 
@@ -153,6 +155,17 @@ export const reducer = (state: State, action: Action) => {
       return {
         ...state,
         editedImageUrl: pixelatedImage.toURL(),
+      };
+    }
+
+    case reducerActions.ROUND_IMAGE: {
+      const roundedImage = cloudinary
+        .image(state.imagePublicId)
+        .resize(fill().width(300).height(300).gravity("faces"))
+        .roundCorners(max());
+      return {
+        ...state,
+        editedImageUrl: roundedImage.toURL(),
       };
     }
 

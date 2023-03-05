@@ -6,8 +6,14 @@ import ImageCropper from "./Cropper";
 import UploadedImage from "./UploadedImage";
 
 const EditOptions = () => {
-  const { state, cropFaces, blurFaces, removeBackground, adjustBrightness } =
-    useContext(ImageContext);
+  const {
+    state,
+    cropFaces,
+    blurFaces,
+    removeBackground,
+    adjustBrightness,
+    roundImage,
+  } = useContext(ImageContext);
   const [showCropper, setShowCropper] = useState({
     toCrop: false,
     toPixelate: false,
@@ -48,6 +54,10 @@ const EditOptions = () => {
         });
         break;
 
+      case EditOptionsList.ROUND_IMAGE:
+        roundImage!();
+        break;
+
       default:
         break;
     }
@@ -66,12 +76,12 @@ const EditOptions = () => {
       {showCropper.toCrop && <ImageCropper toCrop={true} />}
       {showCropper.toPixelate && <ImageCropper toPixelate={true} />}
       <div className="flex flex-col gap-4">
-        <p className="text-teal-800 font-semibold text-xl text-center">
+        <p className="text-teal-800 font-semibold text-xl">
           What would you like to do?
         </p>
         <ul
           onClick={handlePickOption}
-          className="text-teal-500 font-semibold text-lg flex flex-col items-start"
+          className="text-teal-500 font-semibold text-lg flex flex-wrap gap-4"
         >
           {editOptions.map((option) => (
             <li

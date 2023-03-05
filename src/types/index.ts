@@ -12,6 +12,7 @@ export enum EditOptionsList {
   // TURN_OLD = "Turn old",
   ADJUST_BRIGHTNESS = "Adjust brightness",
   PIXELATE_AREA = "Pixelate area",
+  ROUND_IMAGE = "Round image",
 }
 
 export type State = {
@@ -50,6 +51,7 @@ export type ImageContextT = {
   adjustBrightness: ((percentage: number) => void) | null;
   brightnessFinished: (() => void) | null;
   pixelateArea: ((cropData: CropData) => void) | null;
+  roundImage: (() => void) | null;
   // turnOld: (() => void) | null;
 };
 
