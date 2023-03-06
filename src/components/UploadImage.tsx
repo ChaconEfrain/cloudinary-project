@@ -30,7 +30,7 @@ const UploadImage = () => {
     });
 
     dropzone?.on("success", (file, resp) => {
-      const { public_id: publicId, secure_url: url, width, height } = resp;
+      const { public_id: publicId, secure_url: url, width, height }: any = resp;
       setOriginalUrl!({ publicId, url, width, height });
     });
   }, []);
