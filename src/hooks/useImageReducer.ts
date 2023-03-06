@@ -21,8 +21,21 @@ const useImageReducer = () => {
     url: string;
     publicId: string;
     width: number;
+    height: number;
   }) => {
     dispatch({ type: reducerActions.SET_ORIGINAL_URL, payload: imageInfo });
+  };
+
+  const setReferenceImageUrl = (imageInfo: {
+    url: string;
+    publicId: string;
+    width: number;
+    height: number;
+  }) => {
+    dispatch({
+      type: reducerActions.SET_REFERENCE_IMAGE_URL,
+      payload: imageInfo,
+    });
   };
 
   const cropFaces = () => {
@@ -45,8 +58,8 @@ const useImageReducer = () => {
     dispatch({ type: reducerActions.ADJUST_BRIGHTNESS, payload: percentage });
   };
 
-  const brightnessFinished = () => {
-    dispatch({ type: reducerActions.BRIGHTNESS_FINISHED });
+  const adjustingFinished = () => {
+    dispatch({ type: reducerActions.ADJUSTING_FINISHED });
   };
 
   const pixelateArea = (cropData: CropData) => {
@@ -57,20 +70,46 @@ const useImageReducer = () => {
     dispatch({ type: reducerActions.ROUND_IMAGE });
   };
 
+  const adjustHue = (percentage: number) => {
+    dispatch({ type: reducerActions.ADJUST_HUE, payload: percentage });
+  };
+
+  const improveQuality = () => {
+    dispatch({ type: reducerActions.IMPROVE_QUALITY });
+  };
+
+  const adjustSaturation = (percentage: number) => {
+    dispatch({ type: reducerActions.ADJUST_SATURATION, payload: percentage });
+  };
+
+  const showUploadReferenceImage = () => {
+    dispatch({ type: reducerActions.SHOW_UPLOAD_REFERENCE_IMAGE });
+  };
+
+  const turnIntoArtwork = () => {
+    dispatch({ type: reducerActions.TURN_INTO_ARTWORK });
+  };
+
   return {
     state,
     reset,
     editAgain,
     setImageState,
     setOriginalUrl,
+    setReferenceImageUrl,
     cropFaces,
     blurFaces,
     cropImage,
     removeBackground,
     adjustBrightness,
-    brightnessFinished,
+    adjustingFinished,
     pixelateArea,
     roundImage,
+    adjustHue,
+    improveQuality,
+    adjustSaturation,
+    showUploadReferenceImage,
+    turnIntoArtwork,
   };
 };
 

@@ -40,7 +40,7 @@ const ImageComparison = () => {
           loading ? "block" : "hidden"
         } justify-self-center self-center`}
       >
-        <Loading loading={loading} />
+        <Loading width="w-12" height="h-12" />
       </div>
       <div
         className={`flex-col items-center gap-4 ${loading ? "hidden" : "flex"}`}

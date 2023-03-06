@@ -1,11 +1,11 @@
 import React from "react";
 
-const Loading = ({ loading }: { loading: boolean }) => {
+const Loading = ({ width, height }: { width: string; height: string }) => {
   return (
     <div role="status">
       <svg
         aria-hidden="true"
-        className="w-12 h-12 mr-2 text-teal-500 animate-spin fill-teal-800"
+        className={`${width} ${height} mr-2 text-teal-500 animate-spin fill-teal-800`}
         viewBox="0 0 100 101"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"

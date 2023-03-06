@@ -13,17 +13,24 @@ export enum EditOptionsList {
   ADJUST_BRIGHTNESS = "Adjust brightness",
   PIXELATE_AREA = "Pixelate area",
   ROUND_IMAGE = "Round image",
+  ADJUST_HUE = "Adjust hue",
+  IMPROVE_QUALITY = "Improve quality",
+  ADJUST_SATURATION = "Adjust saturation",
+  TURN_INTO_ARTWORK = "Turn into artwork",
 }
 
 export type State = {
   imageUploaded: ImageState;
   wantedEffect: string;
   originalImageUrl: string;
+  referenceImageUrl: string;
   originalWidth: number;
   originalHeight: number;
   imagePublicId: string;
+  referenceImagePublicId: string;
   editedImageUrl: string;
-  brightnessFinished: boolean;
+  adjustingFinished: boolean;
+  showUploadReferenceImage: boolean;
 };
 
 export type Action = {
@@ -44,14 +51,27 @@ export type ImageContextT = {
         height: number;
       }) => void)
     | null;
+  setReferenceImageUrl:
+    | ((imageInfo: {
+        url: string;
+        publicId: string;
+        width: number;
+        height: number;
+      }) => void)
+    | null;
   cropFaces: (() => void) | null;
   blurFaces: (() => void) | null;
   cropImage: ((cropData: CropData) => void) | null;
   removeBackground: (() => void) | null;
   adjustBrightness: ((percentage: number) => void) | null;
-  brightnessFinished: (() => void) | null;
+  adjustSaturation: ((percentage: number) => void) | null;
+  adjustingFinished: (() => void) | null;
   pixelateArea: ((cropData: CropData) => void) | null;
   roundImage: (() => void) | null;
+  adjustHue: ((percentage: number) => void) | null;
+  improveQuality: (() => void) | null;
+  showUploadReferenceImage: (() => void) | null;
+  turnIntoArtwork: (() => void) | null;
   // turnOld: (() => void) | null;
 };
 

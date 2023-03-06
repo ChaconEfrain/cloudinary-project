@@ -6,26 +6,32 @@ import { ImageState } from "@/types";
 import { ImageContext } from "@/context/ImageContextProvider";
 import EditOptions from "@/components/EditOptions";
 import ImageComparison from "@/components/ImageComparison";
+import UploadReferenceImage from "@/components/UploadReferenceImage";
 
 export default function Home() {
   const { state, reset } = useContext(ImageContext);
-  const [adjustingBrightness, setAdjustingBrightness] =
-    useState<boolean>(false);
+  const [adjustingImage, setAdjustingImage] = useState<boolean>(false);
   useEffect(() => {
     if (
-      state?.editedImageUrl.includes("brightness") &&
-      !state.brightnessFinished
+      (state?.editedImageUrl.includes("brightness") ||
+        state?.editedImageUrl.includes("saturation") ||
+        state?.editedImageUrl.includes("hue")) &&
+      !state.adjustingFinished
     ) {
-      setAdjustingBrightness(true);
-    } else if (state?.brightnessFinished) setAdjustingBrightness(false);
-  }, [state?.editedImageUrl, state?.brightnessFinished]);
+      setAdjustingImage(true);
+    } else if (state?.adjustingFinished) setAdjustingImage(false);
+  }, [state?.editedImageUrl, state?.adjustingFinished]);
 
   const showEditOptions =
     state?.imageUploaded === ImageState.DONE &&
-    (!state?.editedImageUrl || state.editedImageUrl.includes("brightness")) &&
-    !state.brightnessFinished;
+    (!state?.editedImageUrl ||
+      state.editedImageUrl.includes("brightness") ||
+      state.editedImageUrl.includes("saturation") ||
+      state.editedImageUrl.includes("hue")) &&
+    !state.adjustingFinished &&
+    !state.showUploadReferenceImage;
   const showUploadImage = !state?.originalImageUrl;
-  const showImageComparisson = state?.editedImageUrl && !adjustingBrightness;
+  const showImageComparisson = state?.editedImageUrl && !adjustingImage;
 
   return (
     <>
@@ -50,6 +56,7 @@ export default function Home() {
         {showEditOptions && <EditOptions />}
         {showUploadImage && <UploadImage />}
         {showImageComparisson && <ImageComparison />}
+        {state?.showUploadReferenceImage && <UploadReferenceImage />}
       </main>
     </>
   );
